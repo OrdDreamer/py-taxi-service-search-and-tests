@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse
 
 
@@ -25,6 +25,7 @@ class AdminSiteTests(TestCase):
         """
         url = reverse("admin:taxi_driver_changelist")
         res = self.client.get(url)
+        self.assertEqual(res.status_code, 200)
         self.assertContains(res, self.driver.license_number)
 
     def test_author_detail_pseudonym_listed(self):
@@ -34,4 +35,5 @@ class AdminSiteTests(TestCase):
         """
         url = reverse("admin:taxi_driver_change", args=[self.driver.id])
         res = self.client.get(url)
+        self.assertEqual(res.status_code, 200)
         self.assertContains(res, self.driver.license_number)
